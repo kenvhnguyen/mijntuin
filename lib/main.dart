@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'new_plant.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -18,9 +20,9 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.lightGreen,
       ),
-      home: MyHomePage(title: 'Mijn Tuin'),
+      home: MyHomePage(title: 'M\'n Tuin'),
     );
   }
 }
@@ -50,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    for (int i = 950; i < 1000; i++) {
+    for (int i = 900; i < 915; i++) {
       myPlants.add(new MyPlant(imageId: i));
     }
     print(myPlants.length);
@@ -65,6 +67,12 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+  }
+
+  void _toNewPlant() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return NewPlant();
+    }));
   }
 
   @override
@@ -91,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _toNewPlant,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
@@ -110,9 +118,9 @@ class MyPlant extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Container(
-            child: Image.network('https://picsum.photos/id/$imageId/800/600'),
+            child: Image.network('https://picsum.photos/id/$imageId/133/100'),
           ),
-          SizedBox(width: 15.0),
+          SizedBox(width: 10.0),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
