@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class NewPlant extends StatelessWidget {
+class EditPlant extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('New Plant'),
+        title: Text('Edit Plant'),
       ),
     );
   }

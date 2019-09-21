@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'my_plant.dart';
 import 'new_plant.dart';
 
 void main() => runApp(MyApp());
@@ -92,11 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: ListView(children: myPlants
-//          <Widget>[
-//            MyPlant(imageId: 234),
-//          ],
-            ),
+        child: ListView(children: myPlants),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _toNewPlant,
@@ -107,31 +104,4 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class MyPlant extends StatelessWidget {
-  MyPlant({this.imageId});
-  final int imageId;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(8.0),
-      height: 100.0,
-      child: Row(
-        children: <Widget>[
-          Container(
-            child: Image.network('https://picsum.photos/id/$imageId/133/100'),
-          ),
-          SizedBox(width: 10.0),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text('Latin Name'),
-              Text('Dutch Name'),
-              Text('Category')
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
+
