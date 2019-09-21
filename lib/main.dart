@@ -72,7 +72,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _toNewPlant() {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return NewPlant();
+      return NewPlant(
+        latinName: 'abc',
+        dutchName: 'gezelig',
+        category: 'Rare',
+        note: 'wat..',
+      );
     }));
   }
 
