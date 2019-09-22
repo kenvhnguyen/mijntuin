@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'edit_plant.dart';
 
 class MyPlant extends StatelessWidget {
-  MyPlant({this.imageId});
-  final int imageId;
+  MyPlant({this.photo});
+  final Image photo;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,11 +15,17 @@ class MyPlant extends StatelessWidget {
           FlatButton(
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return EditPlant();
+                return EditPlant(
+                  image: photo,
+                  latinName: 'hey',
+                  dutchName: 'goed',
+                  category: 'Rare very',
+                  note: 'yyyyy',
+                );
               }));
             },
             child: Container(
-              child: Image.network('https://picsum.photos/id/$imageId/133/100'),
+              child: photo,
             ),
           ),
           SizedBox(width: 10.0),

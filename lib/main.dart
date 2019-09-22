@@ -53,8 +53,19 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    for (int i = 900; i < 915; i++) {
-      myPlants.add(new MyPlant(imageId: i));
+    for (int i = 900; i < 1000; i++) {
+      try {
+        final Image image =
+            Image.network('https://picsum.photos/id/$i/800/600');
+        if (i == 920) {
+          print(i);
+        }
+        if (image != null) {
+          myPlants.add(new MyPlant(photo: image));
+        }
+      } on Exception catch (e) {
+        print('Error fetching image: $e');
+      }
     }
     print(myPlants.length);
   }

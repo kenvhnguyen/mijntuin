@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class EditPlant extends StatelessWidget {
-  EditPlant({this.image, this.latinName, this.dutchName, this.category, this.note});
+  EditPlant(
+      {this.image, this.latinName, this.dutchName, this.category, this.note});
   final Image image;
   final String latinName;
   final String dutchName;
