@@ -47,21 +47,34 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int plantCounter = 0;
   List<MyPlant> myPlants = [];
 
   @override
   void initState() {
     super.initState();
+    loadSampleImages();
+  }
+
+  void loadSampleImages() {
     for (int i = 900; i < 1000; i++) {
       try {
-        final Image image =
+        final Image image1 =
             Image.network('https://picsum.photos/id/$i/800/600');
-        if (i == 920) {
-          print(i);
-        }
-        if (image != null) {
-          myPlants.add(new MyPlant(photo: image));
+        final Image image2 =
+            Image.network('https://picsum.photos/id/${i - 100}/800/600');
+        if (image1 != null && image2 != null) {
+          List<Image> relatedImages = [];
+          relatedImages.add(image1);
+          relatedImages.add(image2);
+          myPlants.add(new MyPlant(
+            photos: relatedImages,
+            latinName: 'some latin name',
+            dutchName: 'some dutch name',
+            category: 'some category',
+            note: 'some note',
+          ));
+          _incrementCounter();
         }
       } on Exception catch (e) {
         print('Error fetching image: $e');
@@ -77,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      _counter++;
+      plantCounter++;
     });
   }
 
@@ -119,5 +132,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
-

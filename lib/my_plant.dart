@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 import 'edit_plant.dart';
 
 class MyPlant extends StatelessWidget {
-  MyPlant({this.photo});
-  final Image photo;
+  MyPlant(
+      {this.photos, this.latinName, this.dutchName, this.category, this.note});
+  final String latinName;
+  final String dutchName;
+  final String category;
+  final String note;
+  final List<Image> photos;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,16 +21,16 @@ class MyPlant extends StatelessWidget {
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return EditPlant(
-                  image: photo,
-                  latinName: 'hey',
-                  dutchName: 'goed',
-                  category: 'Rare very',
-                  note: 'yyyyy',
+                  image: photos[0],
+                  latinName: latinName,
+                  dutchName: dutchName,
+                  category: category,
+                  note: note,
                 );
               }));
             },
             child: Container(
-              child: photo,
+              child: photos[1],
             ),
           ),
           SizedBox(width: 10.0),
@@ -33,9 +38,9 @@ class MyPlant extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('Latin Name'),
-              Text('Dutch Name'),
-              Text('Category')
+              Text('Latin Name: $latinName'),
+              Text('Dutch Name: $dutchName'),
+              Text('Category: $category')
             ],
           )
         ],
