@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "901277998521",
+    "firebase_url": "https://mijn-tuin.firebaseio.com",
+    "project_id": "mijn-tuin",
+    "storage_bucket": "mijn-tuin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:901277998521:android:b853fca9be3048a4586a68",
+        "android_client_info": {
+          "package_name": "co.kenvhnguyen35.mijn_tuin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "901277998521-2k0vautmmqu7ijrphhujrf18pcfikd9h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZOFWCTACTLRDa4mGOd552K4OlM3w18Uo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "901277998521-2k0vautmmqu7ijrphhujrf18pcfikd9h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
