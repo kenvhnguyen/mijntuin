@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
 class EditPlant extends StatelessWidget {
-  EditPlant(
-      {this.image, this.latinName, this.dutchName, this.category, this.note});
+  EditPlant({
+    this.image,
+    this.latinName,
+    this.dutchName,
+    this.category,
+    this.note,
+  });
   final Image image;
   final String latinName;
   final String dutchName;
@@ -12,7 +17,7 @@ class EditPlant extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('New Plant'),
+        title: Text('Edit Plant'),
       ),
       body: Center(
         child: Container(

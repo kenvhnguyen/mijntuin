@@ -30,7 +30,7 @@ class MyPlant extends StatelessWidget {
               }));
             },
             child: Container(
-              child: photos[1],
+              child: photos[0],
             ),
           ),
           SizedBox(width: 10.0),

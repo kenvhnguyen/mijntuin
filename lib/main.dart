@@ -2,43 +2,26 @@ import 'package:flutter/material.dart';
 
 import 'my_plant.dart';
 import 'new_plant.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() => runApp(MyApp());
+final _store = Firestore.instance;
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.lightGreen,
+        primarySwatch: Colors.blueGrey,
       ),
-      home: MyHomePage(title: 'M\'n Tuin'),
+      home: MyHomePage(title: 'Mijn Tuin'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -53,7 +36,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    loadSampleImages();
+//    loadSampleImages();
+//    getPlants();
   }
 
   void loadSampleImages() {
@@ -83,6 +67,24 @@ class _MyHomePageState extends State<MyHomePage> {
     print(myPlants.length);
   }
 
+  void getPlants() async {
+    final plants = await _store.collection('plants').getDocuments();
+    for (var plant in plants.documents) {
+      final Image image1 = Image.network(plant.data['imageLink']);
+      List<Image> relatedImages = [];
+      relatedImages.add(image1);
+      final myPlant = MyPlant(
+        photos: relatedImages,
+        latinName: plant.data['latinName'],
+        dutchName: plant.data['dutchName'],
+        category: plant.data['category'],
+        note: plant.data['note'],
+      );
+      myPlants.add(myPlant);
+    }
+    print(' YEAH:::: ${myPlants.length}');
+  }
+
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -107,28 +109,73 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: ListView(children: myPlants),
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            AllMyPlants(),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _toNewPlant,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class AllMyPlants extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      // clearly declare the type here so we can access the content of snapshot.data
+      stream: _store
+          .collection('plants')
+          .snapshots(), // a stream of QuerySnapshot which is FireStore object! <> Flutter's AsyncSnapshot
+      builder: (context, snapshot) {
+        // this is Flutter's AsyncSnapshot
+        if (snapshot.hasData) {
+          final plants = snapshot.data.documents;
+          List<MyPlant> plantWidgets = [];
+          for (var plant in plants) {
+            final imageLink = plant.data['imageLink'];
+            final image = Image.network(imageLink);
+            final List<Image> photos = [];
+            photos.add(image);
+            final latinName = plant.data['latinName'];
+            final dutchName = plant.data['dutchName'];
+            final category = plant.data['category'];
+            final note = plant.data['note'];
+            plantWidgets.add(
+              MyPlant(
+                photos: photos,
+                dutchName: dutchName,
+                latinName: latinName,
+                category: category,
+                note: note,
+              ),
+            );
+          }
+          return Expanded(
+            child: ListView(
+              reverse: false,
+              padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+              children: plantWidgets,
+            ),
+          );
+        } else {
+          return Center(
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.lightBlueAccent,
+            ),
+          );
+        }
+      },
     );
   }
 }
