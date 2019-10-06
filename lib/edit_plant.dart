@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class EditPlant extends StatelessWidget {
+class EditPlant extends StatefulWidget {
   EditPlant({
     this.image,
     this.latinName,
@@ -13,6 +13,30 @@ class EditPlant extends StatelessWidget {
   final String dutchName;
   final String category;
   final String note;
+
+  @override
+  _EditPlantState createState() => _EditPlantState();
+}
+
+class _EditPlantState extends State<EditPlant> {
+  final TextEditingController latinTextEditingController =
+      TextEditingController();
+  final TextEditingController dutchTextEditingController =
+      TextEditingController();
+  final TextEditingController categoryTextEditingController =
+      TextEditingController();
+  final TextEditingController noteTextEditingController =
+      TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    latinTextEditingController.value = TextEditingValue(text: widget.latinName);
+    dutchTextEditingController.value = TextEditingValue(text: widget.dutchName);
+    categoryTextEditingController.value =
+        TextEditingValue(text: widget.category);
+    noteTextEditingController.value = TextEditingValue(text: widget.note);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,22 +48,40 @@ class EditPlant extends StatelessWidget {
           padding: EdgeInsets.all(10.0),
           child: Column(
             children: <Widget>[
-              image,
+              Expanded(child: widget.image),
               SizedBox(height: 10.0),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Row(children: <Widget>[
-                    Text('Latin Name: '),
-                    Text(latinName),
+                    Text('Latin: '),
+                    Flexible(
+                      child: TextField(
+                        style: Theme.of(context).textTheme.body1,
+                        controller: latinTextEditingController,
+                        decoration: InputDecoration.collapsed(),
+                      ),
+                    ),
                   ]),
                   Row(children: <Widget>[
-                    Text('Dutch Name: '),
-                    Text(dutchName),
+                    Text('Nederlands: '),
+                    Flexible(
+                      child: TextField(
+                          style: Theme.of(context).textTheme.body1,
+                          controller: dutchTextEditingController,
+                          decoration: InputDecoration.collapsed()),
+                    ),
                   ]),
                   Row(children: <Widget>[
                     Text('Category: '),
-                    Text(category),
+                    Flexible(
+                      child: TextField(
+                        style: Theme.of(context).textTheme.body1,
+                        controller: categoryTextEditingController,
+                        decoration: InputDecoration.collapsed(),
+                        onSubmitted: (value) {},
+                      ),
+                    ),
                   ]),
                 ],
               ),
@@ -48,9 +90,8 @@ class EditPlant extends StatelessWidget {
               ),
               Expanded(
                 child: TextField(
-                  style: TextStyle(
-                    fontFamily: "Poppin",
-                  ),
+                  style: Theme.of(context).textTheme.body1,
+                  controller: noteTextEditingController,
                   decoration: InputDecoration(
                     alignLabelWithHint: true,
                     labelText: 'My note',
@@ -59,7 +100,7 @@ class EditPlant extends StatelessWidget {
                       borderSide: new BorderSide(),
                     ),
                   ),
-                  maxLines: 100,
+                  maxLines: 50,
                 ),
               ),
             ],

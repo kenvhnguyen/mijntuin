@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'edit_plant.dart';
 
-class MyPlant extends StatelessWidget {
+class MyPlant extends StatefulWidget {
   MyPlant(
       {this.photos, this.latinName, this.dutchName, this.category, this.note});
   final String latinName;
@@ -10,6 +10,12 @@ class MyPlant extends StatelessWidget {
   final String category;
   final String note;
   final List<Image> photos;
+
+  @override
+  _MyPlantState createState() => _MyPlantState();
+}
+
+class _MyPlantState extends State<MyPlant> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,16 +27,16 @@ class MyPlant extends StatelessWidget {
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return EditPlant(
-                  image: photos[0],
-                  latinName: latinName,
-                  dutchName: dutchName,
-                  category: category,
-                  note: note,
+                  image: widget.photos[0],
+                  latinName: widget.latinName,
+                  dutchName: widget.dutchName,
+                  category: widget.category,
+                  note: widget.note,
                 );
               }));
             },
             child: Container(
-              child: photos[0],
+              child: widget.photos[0],
             ),
           ),
           SizedBox(width: 10.0),
@@ -38,9 +44,9 @@ class MyPlant extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('Latin Name: $latinName'),
-              Text('Dutch Name: $dutchName'),
-              Text('Category: $category')
+              Text('Latin Name: ${widget.latinName}'),
+              Text('Dutch Name: ${widget.dutchName}'),
+              Text('Category: ${widget.category}')
             ],
           )
         ],
