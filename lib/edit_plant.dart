@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mijn_tuin/update_text_field.dart';
 
 class EditPlant extends StatefulWidget {
   EditPlant({
@@ -56,32 +58,40 @@ class _EditPlantState extends State<EditPlant> {
                   Row(children: <Widget>[
                     Text('Latin: '),
                     Flexible(
-                      child: TextField(
-                        style: Theme.of(context).textTheme.body1,
+                      child: new UpdatableTextField(
+                        itemName: widget.latinName,
+                        fieldName: 'latinName',
                         controller: latinTextEditingController,
-                        decoration: InputDecoration.collapsed(),
+                        inputDecoration: InputDecoration.collapsed(
+                            hintText: 'Latin name of the plant'),
+                        maxLines: 1,
                       ),
                     ),
                   ]),
                   Row(children: <Widget>[
                     Text('Nederlands: '),
                     Flexible(
-                      child: TextField(
-                          style: Theme.of(context).textTheme.body1,
-                          controller: dutchTextEditingController,
-                          decoration: InputDecoration.collapsed()),
+                      child: UpdatableTextField(
+                        itemName: widget.latinName,
+                        fieldName: 'dutchName',
+                        controller: dutchTextEditingController,
+                        inputDecoration: InputDecoration.collapsed(
+                            hintText: 'Dutch name of the plant'),
+                        maxLines: 1,
+                      ),
                     ),
                   ]),
                   Row(children: <Widget>[
                     Text('Category: '),
                     Flexible(
-                      child: TextField(
-                        style: Theme.of(context).textTheme.body1,
-                        controller: categoryTextEditingController,
-                        decoration: InputDecoration.collapsed(),
-                        onSubmitted: (value) {},
-                      ),
-                    ),
+                        child: UpdatableTextField(
+                      itemName: widget.latinName,
+                      fieldName: 'category',
+                      controller: categoryTextEditingController,
+                      inputDecoration: InputDecoration.collapsed(
+                          hintText: 'Category of the plant'),
+                      maxLines: 1,
+                    )),
                   ]),
                 ],
               ),
@@ -89,10 +99,11 @@ class _EditPlantState extends State<EditPlant> {
                 height: 10.0,
               ),
               Expanded(
-                child: TextField(
-                  style: Theme.of(context).textTheme.body1,
+                child: UpdatableTextField(
+                  itemName: widget.latinName,
+                  fieldName: 'note',
                   controller: noteTextEditingController,
-                  decoration: InputDecoration(
+                  inputDecoration: InputDecoration(
                     alignLabelWithHint: true,
                     labelText: 'My note',
                     border: new OutlineInputBorder(
