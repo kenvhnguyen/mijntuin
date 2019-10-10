@@ -29,6 +29,8 @@ class _EditPlantState extends State<EditPlant> {
       TextEditingController();
   final TextEditingController noteTextEditingController =
       TextEditingController();
+  final _store = Firestore.instance;
+
   @override
   void initState() {
     super.initState();
@@ -118,6 +120,32 @@ class _EditPlantState extends State<EditPlant> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _store
+              .collection('plants')
+              .where('latinName', isEqualTo: latinTextEditingController.text)
+              .getDocuments()
+              .then((querySnapshot) {
+            print(querySnapshot.documents);
+            for (var plant in querySnapshot.documents) {
+              _updatePlant(plant, 'dutchName', dutchTextEditingController.text);
+              _updatePlant(
+                  plant, 'category', categoryTextEditingController.text);
+              _updatePlant(plant, 'note', noteTextEditingController.text);
+            }
+          });
+        },
+        tooltip: 'Save all',
+        child: Icon(Icons.save),
+      ), // This tr
     );
+  }
+
+  void _updatePlant(DocumentSnapshot doc, String field, String value) async {
+    await _store
+        .collection('plants')
+        .document(doc.documentID)
+        .updateData({field: value});
   }
 }

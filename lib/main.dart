@@ -36,64 +36,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-//    loadSampleImages();
-//    getPlants();
-  }
-
-  void loadSampleImages() {
-    for (int i = 900; i < 1000; i++) {
-      try {
-        final Image image1 =
-            Image.network('https://picsum.photos/id/$i/800/600');
-        final Image image2 =
-            Image.network('https://picsum.photos/id/${i - 100}/800/600');
-        if (image1 != null && image2 != null) {
-          List<Image> relatedImages = [];
-          relatedImages.add(image1);
-          relatedImages.add(image2);
-          myPlants.add(new MyPlant(
-            photos: relatedImages,
-            latinName: 'some latin name',
-            dutchName: 'some dutch name',
-            category: 'some category',
-            note: 'some note',
-          ));
-          _incrementCounter();
-        }
-      } on Exception catch (e) {
-        print('Error fetching image: $e');
-      }
-    }
-    print(myPlants.length);
-  }
-
-  void getPlants() async {
-    final plants = await _store.collection('plants').getDocuments();
-    for (var plant in plants.documents) {
-      final Image image1 = Image.network(plant.data['imageLink']);
-      List<Image> relatedImages = [];
-      relatedImages.add(image1);
-      final myPlant = MyPlant(
-        photos: relatedImages,
-        latinName: plant.data['latinName'],
-        dutchName: plant.data['dutchName'],
-        category: plant.data['category'],
-        note: plant.data['note'],
-      );
-      myPlants.add(myPlant);
-    }
-    print(' YEAH:::: ${myPlants.length}');
-  }
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      plantCounter++;
-    });
   }
 
   void _toNewPlant() {
@@ -122,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _toNewPlant,
-        tooltip: 'Increment',
+        tooltip: 'add new plant to your garden',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );

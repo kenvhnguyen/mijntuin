@@ -32,14 +32,14 @@ class UpdatableTextField extends StatelessWidget {
             .then((querySnapshot) {
           print(querySnapshot.documents);
           for (var plant in querySnapshot.documents) {
-            _updateDate(plant, fieldName, controller.text);
+            _updatePlant(plant, fieldName, controller.text);
           }
         });
       },
     );
   }
 
-  void _updateDate(DocumentSnapshot doc, String field, String value) async {
+  void _updatePlant(DocumentSnapshot doc, String field, String value) async {
     await _store
         .collection('plants')
         .document(doc.documentID)
