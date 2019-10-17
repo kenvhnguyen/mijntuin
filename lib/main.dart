@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import 'my_plant.dart';
@@ -40,12 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _toNewPlant() {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return NewPlant(
-        latinName: 'abc',
-        dutchName: 'gezelig',
-        category: 'Rare',
-        note: 'wat..',
-      );
+      return NewPlant();
     }));
   }
 
@@ -78,6 +74,7 @@ class AllMyPlants extends StatelessWidget {
       // clearly declare the type here so we can access the content of snapshot.data
       stream: _store
           .collection('plants')
+//          .orderBy('date', descending: false)
           .snapshots(), // a stream of QuerySnapshot which is FireStore object! <> Flutter's AsyncSnapshot
       builder: (context, snapshot) {
         // this is Flutter's AsyncSnapshot
@@ -85,6 +82,7 @@ class AllMyPlants extends StatelessWidget {
           final plants = snapshot.data.documents;
           List<MyPlant> plantWidgets = [];
           for (var plant in plants) {
+            final plantId = plant.documentID;
             final imageLink = plant.data['imageLink'];
             final image = Image.network(imageLink);
             final List<Image> photos = [];
@@ -95,6 +93,7 @@ class AllMyPlants extends StatelessWidget {
             final note = plant.data['note'];
             plantWidgets.add(
               MyPlant(
+                plantId: plantId,
                 photos: photos,
                 dutchName: dutchName,
                 latinName: latinName,

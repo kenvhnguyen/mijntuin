@@ -4,12 +4,14 @@ import 'package:mijn_tuin/update_text_field.dart';
 
 class EditPlant extends StatefulWidget {
   EditPlant({
+    this.plantId,
     this.image,
     this.latinName,
     this.dutchName,
     this.category,
     this.note,
   });
+  final String plantId;
   final Image image;
   final String latinName;
   final String dutchName;
@@ -46,6 +48,21 @@ class _EditPlantState extends State<EditPlant> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Plant'),
+        actions: <Widget>[
+          FlatButton(
+            textColor: Colors.white,
+            onPressed: () {
+              _savePlant(widget.plantId);
+            },
+            child: Text(
+              "Save",
+              style: TextStyle(
+                fontSize: 18.0,
+              ),
+            ),
+            shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+          ),
+        ],
       ),
       body: Center(
         child: Container(
@@ -119,33 +136,16 @@ class _EditPlantState extends State<EditPlant> {
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _store
-              .collection('plants')
-              .where('latinName', isEqualTo: latinTextEditingController.text)
-              .getDocuments()
-              .then((querySnapshot) {
-            print(querySnapshot.documents);
-            for (var plant in querySnapshot.documents) {
-              _updatePlant(plant, 'dutchName', dutchTextEditingController.text);
-              _updatePlant(
-                  plant, 'category', categoryTextEditingController.text);
-              _updatePlant(plant, 'note', noteTextEditingController.text);
-            }
-          });
-        },
-        tooltip: 'Save all',
-        child: Icon(Icons.save),
       ), // This tr
     );
   }
 
-  void _updatePlant(DocumentSnapshot doc, String field, String value) async {
-    await _store
-        .collection('plants')
-        .document(doc.documentID)
-        .updateData({field: value});
+  void _savePlant(String plantId) {
+    _store.collection('plants').document(plantId).updateData({
+      'latinName': latinTextEditingController.text,
+      'dutchName': dutchTextEditingController.text,
+      'category': categoryTextEditingController.text,
+      'note': noteTextEditingController.text
+    });
   }
 }

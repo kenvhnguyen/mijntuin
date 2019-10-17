@@ -4,7 +4,13 @@ import 'edit_plant.dart';
 
 class MyPlant extends StatefulWidget {
   MyPlant(
-      {this.photos, this.latinName, this.dutchName, this.category, this.note});
+      {@required this.plantId,
+      this.photos,
+      this.latinName,
+      this.dutchName,
+      this.category,
+      this.note});
+  final String plantId;
   final String latinName;
   final String dutchName;
   final String category;
@@ -27,6 +33,7 @@ class _MyPlantState extends State<MyPlant> {
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return EditPlant(
+                  plantId: widget.plantId,
                   image: widget.photos[0],
                   latinName: widget.latinName,
                   dutchName: widget.dutchName,
@@ -44,9 +51,9 @@ class _MyPlantState extends State<MyPlant> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('Latin Name: ${widget.latinName}'),
-              Text('Dutch Name: ${widget.dutchName}'),
-              Text('Category: ${widget.category}')
+              Text('${widget.latinName}'),
+              Text('${widget.dutchName}'),
+              Text('${widget.category}')
             ],
           )
         ],
