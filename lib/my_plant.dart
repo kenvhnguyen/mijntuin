@@ -51,7 +51,13 @@ class _MyPlantState extends State<MyPlant> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('${widget.latinName}'),
+              Text(
+                '${widget.latinName}',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               Text('${widget.dutchName}'),
               Text('${widget.category}')
             ],
